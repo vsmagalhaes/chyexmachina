@@ -1,14 +1,12 @@
 import Tkinter as tk
 
+import auxiliary as aux
+
 
 class MainWindow(tk.Frame):
     counter = 0
     string = ''
     radexOn = 0
-
-    # iotext = tk.StringVar()
-
-
 
     def __init__(self, *args, **kwargs):
         tk.Frame.__init__(self, *args, **kwargs)
@@ -48,11 +46,7 @@ class MainWindow(tk.Frame):
     def radex_grids(self):
         t = tk.Toplevel(self)
         if self.radexOn:
-            t.wm_title("ERROR!")
-            warn = tk.Label(t, text="ERROR: Another RADEX interface window already open!")
-            warn.pack(side='top')
-            qt = tk.Button(t, text='Ok', command=t.destroy)
-            qt.pack(side='bottom')
+            aux.Misc().error_window(t, "Another RADEX interface window already open!")
         else:
             self.radexOn += 1
             t.wm_title("RADEX grid Interface")
@@ -90,15 +84,38 @@ class MainWindow(tk.Frame):
             field = tk.Entry(t, textvariable=dvel)
             field.grid(row=6, column=1, pady=5, padx=5)
 
-            endbutton = tk.Button(t, text='Accept and Go!', command=lambda: self.summon_gridder(t))
+            endbutton = tk.Button(t, fg='blue', text='Accept and Go!', \
+                                  command=lambda: self.summon_gridder(t, mole, cdens, freqs, ndens, temps, dvel))
             endbutton.grid(row=10, column=1, pady=10)
+            cancelbutton = tk.Button(t, fg='red', text='Cancel', \
+                                     command=lambda: self.cancel_gridder(t))
+            cancelbutton.grid(row=10, column=0, pady=10)
 
-    def summon_gridder(self, t):
+    def summon_gridder(self, frame, *gridpars):
+        newGrid = aux.Gridder(*gridpars)
+        if not self.status_check(newGrid.write_grid_file()):
+            self.radexOn -= 1
+            frame.destroy()
+            return
+        self.status_check(newGrid.call_gridder())
         self.radexOn -= 1
-        # aux.Gridder.write_grid_file()
-        # aux.Gridder.call_gridder()
+        frame.destroy()
+
+    def cancel_gridder(self, t):
+        self.radexOn -= 1
         t.destroy()
 
+    def status_check(self, status):
+        if status == -1:
+            t = tk.Toplevel(self)
+            aux.Misc().error_window(t, aux.defaultMessage)
+            return False
+        elif status == 0:
+            t = tk.Toplevel(self)
+            aux.Misc().warn_window(t, aux.defaultMessage)
+            return False
+        else:
+            return True
 
 root = tk.Tk()
 root.title("Empty GUI")
