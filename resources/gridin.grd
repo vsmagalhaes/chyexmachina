@@ -1,0 +1,13 @@
+### teste de input para gridder
+##molecula
+cn-h2-hfs
+##Column densities
+1e10 1e15 3
+##fequency rang
+200 300
+##Densities
+1e3 1e5	3
+##temperatures
+5 8 10 12
+##Line width
+1
