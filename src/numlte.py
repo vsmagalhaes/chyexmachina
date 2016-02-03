@@ -146,8 +146,8 @@ def part_statistics_ratio(eup, tt, tex):
     return (np.exp(tt / tex)) / (1.0 - np.exp(-(eup - tt) / tex))
 
 
-def tex():
-    return 0
+def tex(tau, etau, tr, etr, nu):
+    return tex, etex
 
 
 def part_interp():
