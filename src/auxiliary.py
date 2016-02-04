@@ -10,8 +10,10 @@ import Tkinter as tk
 import os
 import time
 
+import numlte as nl
+
 softName = "Chyexmachina"
-version = 'Prerelease 0.1'
+version = 'Prerelease 0.2'
 defaultMessage = 'Something went wrong see terminal window for details.'
 
 
@@ -67,6 +69,42 @@ class Misc():
     def help_button(self, frame, help_com):
         return tk.Button(frame, text='Help', command=help_com, fg='orange')
 
+    def get_par_from_sv_werr(self, sv):
+        parw = sv.get().split()
+        if len(parw) == 1:
+            par = float(parw[0])
+            epar = 0.0
+            status = 1
+        elif len(parw) == 2:
+            par = float(parw[0])
+            epar = float(parw[1])
+            status = 1
+        elif len(parw) > 2:
+            par = float(parw[0])
+            epar = float(parw[1])
+            status = 0
+            self.warn_msg("More than 2 parameters given...")
+        else:
+            par = None
+            epar = None
+            status = -1
+            self.error_msg("No parameters given")
+        return par, epar, status
+
+    def get_par_from_sv_nerr(self, sv):
+        parw = sv.get().split()
+        if len(parw) == 1:
+            par = float(parw[0])
+            status = 1
+        elif len(parw) > 1:
+            par = float(parw[0])
+            status = 0
+            self.warn_msg("More than 1 parameter given...")
+        else:
+            par = None
+            status = -1
+            self.error_msg("No parameters given")
+        return par, status
 
 class Gridder():
     molecule = ''
@@ -146,7 +184,29 @@ class Gridder():
             return -1
 
 
-class LTE():
+class LTE:
+    class tex:
+        parnames = ["Opacity: ", 'Intensity [K] :', 'Frequency [GHz] :']
+        pardesc = ['Total opacity of the line',
+                   'Main beam scale line intensity in Kelvins',
+                   'Rest frequency of the line']
+        parexam = ['4.7 ## No uncertainty\n\t4.7 1.0 ## Uncertainty of 1.0',
+                   '2.5 ## No uncertainty\n\t2.5 0.1 ## Uncertainty of 0.1',
+                   '340 ## No uncertainty']
+
+        def calculate_Tex(self, result_sv, *args):
+            tau, etau, status1 = Misc().get_par_from_sv_werr(args[0])
+            tr, etr, status2 = Misc().get_par_from_sv_werr(args[1])
+            nu, status3 = Misc().get_par_from_sv_nerr(args[2])
+            status = [status1, status2, status3]
+            if -1 in status:
+                result_sv.set("ERROR!")
+            else:
+                tex, etex = nl.calc_tex(tau, etau, tr, etr, 1e9 * nu)
+                result_sv.set("{0:.2e} +- {1:.2e}".format(tex, etex))
+            print "calculando"
+
+
     def manual_input(self, filename):
         return 0
 
@@ -157,9 +217,13 @@ class LTE():
         return 0
 
 
-class ChiMachine():
+class Chi_Machine():
     def input_grids(self, *gridnames):
         return 0
 
     def call_chimachine(self, gridnames, obs):
         return 0
+
+
+class Grid_Analisys():
+    plotdev = 0

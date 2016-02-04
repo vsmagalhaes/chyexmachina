@@ -1,11 +1,20 @@
 # chyexmachina
 
-## Version : 'Prerelease 0.1'
+## Version : 'Prerelease 0.2'
 
-## Radex Gridding interface works, needs historic!.
-    ## Helper buttons Done!
-## Next:
-    LTE Interface!
-        TEX
-        Column
-        BB
+Helper buttons -> Done!
+
+## Radex Gridding interface works
+    needs historic!
+
+
+##LTE Interface -> Done!
+    TEX -> Done!
+    Column
+    BB
+
+##Next
+    Documentation
+    Grid analysis
+    Chi^2 of grid
+

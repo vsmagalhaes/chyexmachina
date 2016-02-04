@@ -114,7 +114,7 @@ def coldens(*args):
     if deltav == 0:
         protocol = const * (nu ** 3) / (einstein) / gup
         dejnu = djnu(tex, tbg, nu)
-        edejnu = max(djnu(tex + etex, tex, nu), djnu(tex - etex, tex, nu))
+        edejnu = max(abs(djnu(tex + etex, tex, nu)), abs(djnu(tex - etex, tex, nu)))
         ratio = tau / dejnu
         etau = ratio * math.sqrt(etau ** 2 / tau ** 2 + edejnu ** 2 / dejnu ** 2)
         tau = ratio
@@ -125,8 +125,8 @@ def coldens(*args):
         protocol = const * vperfi * (nu ** 3) / (einstein) / gup
         eprotocol = const * evperfi * (nu ** 3) / einstein / gup
     exps = part_statistics_ratio(eup, tt, tex)
-    eexps = max(part_statistics_ratio(eup, tt, tex + etex) - part_statistics_ratio(eup, tt, tex),
-                part_statistics_ratio(eup, tt, tex - etex) - part_statistics_ratio(eup, tt, tex))
+    eexps = max(abs(part_statistics_ratio(eup, tt, tex + etex) - part_statistics_ratio(eup, tt, tex)),
+                abs(part_statistics_ratio(eup, tt, tex - etex) - part_statistics_ratio(eup, tt, tex)))
     prefac = protocol * tau * exps
     eprefac = protocol * np.sqrt(etau ** 2 + eexps ** 2 + eprotocol ** 2)
     ncol = prefac * qpart
@@ -146,7 +146,15 @@ def part_statistics_ratio(eup, tt, tex):
     return (np.exp(tt / tex)) / (1.0 - np.exp(-(eup - tt) / tex))
 
 
-def tex(tau, etau, tr, etr, nu):
+def calc_tex(tau, etau, tr, etr, freq):
+    exptau = 1 - math.exp(-tau)
+    eexptau = max(abs(1 - math.exp(-(tau + etau)) - exptau), abs(1 - math.exp(-(tau - etau)) - exptau))
+    jnubg = jnu(tbg, freq)
+    ratio = tr / exptau
+    jnutex = jnubg + ratio
+    ejnutex = ratio * math.sqrt(etr ** 2 / tr ** 2 + eexptau ** 2 / exptau ** 2)
+    tex = ijnu(jnutex, freq)
+    etex = max(abs(ijnu(jnutex + ejnutex, freq) - tex), abs(ijnu(jnutex - ejnutex, freq) - tex))
     return tex, etex
 
 
