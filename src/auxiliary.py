@@ -10,6 +10,8 @@ import Tkinter as tk
 import os
 import time
 
+import numpy as np
+
 import numlte as nl
 
 softName = "Chyexmachina"
@@ -261,6 +263,96 @@ class LTE:
                 tex, etex = nl.calc_tex(tau, etau, tr, etr, 1e9 * nu)
                 result_sv.set("{0:.2f} +- {1:.2f}".format(tex, etex))
 
+    class bb:
+        bnuNames = ["Temperature [K]", "Frequency [GHz]", "Flux [Jy]"]
+        jnuNames = ["Temperature [K]", "Frequency [GHz]", "Intensity [K]"]
+        emergNames = ["Excitation Temperature[K]", "Opacity", "Frequency [GHz]", "Intensity [K]"]
+
+        helpbnu = ["Bnu/Ibnu", "calculate Bnu ibnu", "example"]
+        helpjnu = ["jnu/Ijnu", "calculate jnu ijnu", "example"]
+        helpemerg = ["", "", ""]
+
+        def decide_bnu_ibnu(self, pars):
+            temp = pars[0].get()
+            nu = pars[1].get()
+            flux = pars[2].get()
+            if temp == "" and (nu != "") and (flux != ""):
+                nuf = 1.0e9 * float(nu)
+                fluxf = float(flux)
+                tempf = nl.ibnu(fluxf, nuf)
+                pars[0].set("{0:.3f}".format(tempf))
+                return 1
+            elif flux == "" and (nu != "") and (temp != ""):
+                nuf = 1.0e9 * float(nu)
+                tempf = float(temp)
+                fluxf = nl.bnu(tempf, nuf) / nl.jy2erg
+                pars[2].set("{0:.3e}".format(fluxf))
+                return 1
+            elif (flux != "") and (nu != "") and (temp != ""):
+                Misc().warn_msg("All parameters Filled.")
+                return 0
+            elif (flux == "") and (nu == "") and (temp == ""):
+                Misc().warn_msg("No parameters Filled.")
+                return 0
+            elif flux != "" and (nu == "") and (temp != ""):
+                Misc().error_msg("You have to type in the Frequency.")
+                return -1
+            else:
+                Misc().error_msg("Something went really wrong, contact developer.")
+                return -1
+
+        def decide_jnu_ijnu(self, pars):
+            """
+            ***NEEDS PARAMETERS RENAMING!!! but it works!
+            :param pars:
+            :return:
+            """
+            temp = pars[0].get()
+            nu = pars[1].get()
+            flux = pars[2].get()
+            if temp == "" and (nu != "") and (flux != ""):
+                nuf = 1.0e9 * float(nu)
+                fluxf = float(flux)
+                tempf = nl.ijnu(fluxf, nuf)
+                pars[0].set("{0:.3f}".format(tempf))
+                return 1
+            elif flux == "" and (nu != "") and (temp != ""):
+                nuf = 1.0e9 * float(nu)
+                tempf = float(temp)
+                fluxf = nl.jnu(tempf, nuf)
+                pars[2].set("{0:.3e}".format(fluxf))
+                return 1
+            elif flux != "" and (nu == "") and (temp != ""):
+                Misc().error_msg("You have to type in the Frequency.")
+                return -1
+            elif (flux != "") and (nu != "") and (temp != ""):
+                Misc().warn_msg("All parameters Filled.")
+                return 0
+            elif (flux == "") and (nu == "") and (temp == ""):
+                Misc().warn_msg("No parameters Filled.")
+                return 0
+            else:
+                Misc().error_msg("Something went really wrong, contact developer.")
+                return -1
+
+        def calc_emerging(self, pars):
+            tex = pars[0].get()
+            tau = pars[1].get()
+            nu = pars[2].get()
+            if tex != '' and tau != '' and nu != '':
+                texf = float(tex)
+                tauf = float(tau)
+                nuf = float(nu)
+                dejnu = nl.djnu(texf, nl.tbg, nuf)
+                emerg = dejnu * (1 - np.exp(-1.0 * tauf))
+                pars[3].set("{0:.2f}".format(emerg))
+                return 1
+            elif tex == '' and tau == '' and nu == '':
+                Misc().warn_msg("No parameters given.")
+                return 0
+            else:
+                Misc().error_msg("All parameters need to be given.")
+                return -1
 
     def manual_input(self, filename):
         return 0

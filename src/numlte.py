@@ -14,6 +14,7 @@ kboltz = 1.380658e-16  # ergs/kelvin
 cc = 2.99792458e10  # cm/s
 hplanck = 6.6260755e-27  # ergs*second
 tbg = 2.73  # Temperature of the CMB, put a more realistic value
+jy2erg = 1.0e-23
 
 
 def jnu(temp, nu):
@@ -55,7 +56,7 @@ def bnu(temp, freq):
     Black body radiation flux at give intensity and frequency
     :param temp: Temperature [K]
     :param freq: Frequency [K]
-    :return: Intensity [?]
+    :return: Flux [erg*cm^{-2}]
     """
     flux = (2 * hplanck * freq ** 3 / cc ** 2) / (math.exp(hplanck / kboltz * (freq / temp)) - 1.)
     return flux
@@ -64,7 +65,7 @@ def bnu(temp, freq):
 def ibnu(flux, freq):
     """
     Temperature for a given black body radiation flux at given frequency
-    :param flux: Flux [?]
+    :param flux: Flux [erg*cm^{-2}]
     :param freq: Frequency [Hz]
     :return: Temperature [K]
     """
@@ -83,7 +84,7 @@ def coldens(*args):
         In this case  it is assumed that args[8] is the opacity of the
         line and args[9] its error.
     :param args:
-        [0] Frequency [Hz]
+        [0] Frequency [GHz]
         [1] Einsteins Coefficient [s^{-1}] ?
         [2] Upper level Degeneracy
         [3] Upper level Energy

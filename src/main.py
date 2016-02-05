@@ -220,8 +220,51 @@ class MainWindow(tk.Frame):
         close_button.grid(row=10, column=0, columnspan=3)
 
     def bb_window(self, frame):
+        bb_ins = aux.LTE.bb()
+        toptext = tk.Label(frame, text='Black body Quantities')
+        toptext.grid(row=0, column=0, columnspan=5)
+        frame.wm_title('Black body Quantities')
+        bnulabel = tk.Label(frame, text='B_{nu}:')
+        bnulabel.grid(row=1, column=0, columnspan=1, sticky='w')
+        bnupars = []
+        for i in range(3):
+            par = tk.StringVar()
+            tk.Label(frame, text=bb_ins.bnuNames[i]).grid(row=2, column=i, padx=5, pady=5)
+            tk.Entry(frame, textvariable=par).grid(row=3, column=i, padx=5, pady=5)
+            bnupars.append(par)
+        gobnu = tk.Button(frame, text='Go!', command=lambda: self.status_check(bb_ins.decide_bnu_ibnu(bnupars)))
+        gobnu.grid(row=3, column=4, padx=5, pady=5)
+        helpbnu = aux.Misc().help_button(frame, frame.destroy)
+        helpbnu.grid(row=3, column=5, padx=5, pady=5)
+
+        jnulabel = tk.Label(frame, text='J_{nu}:')
+        jnulabel.grid(row=4, column=0, columnspan=1, sticky='w')
+        jnupars = []
+        for i in range(3):
+            par = tk.StringVar()
+            tk.Label(frame, text=bb_ins.jnuNames[i]).grid(row=5, column=i, padx=5, pady=5)
+            tk.Entry(frame, textvariable=par).grid(row=6, column=i, padx=5, pady=5)
+            jnupars.append(par)
+        gojnu = tk.Button(frame, text='Go!', command=lambda: self.status_check(bb_ins.decide_jnu_ijnu(jnupars)))
+        gojnu.grid(row=6, column=4, padx=5, pady=5)
+        helpjnu = aux.Misc().help_button(frame, frame.destroy)
+        helpjnu.grid(row=6, column=5, padx=5, pady=5)
+
+        emerglabel = tk.Label(frame, text='Emergent Intensity:')
+        emerglabel.grid(row=7, column=0, columnspan=1, sticky='w')
+        emergpars = []
+        for i in range(4):
+            par = tk.StringVar()
+            tk.Label(frame, text=bb_ins.emergNames[i]).grid(row=8, column=i, padx=5, pady=5)
+            tk.Entry(frame, textvariable=par).grid(row=9, column=i, padx=5, pady=5)
+            emergpars.append(par)
+        goemerg = tk.Button(frame, text='Go!', command=lambda: self.status_check(bb_ins.calc_emerging(emergpars)))
+        goemerg.grid(row=9, column=4, padx=5, pady=5)
+        helpemerg = aux.Misc().help_button(frame, frame.destroy)
+        helpemerg.grid(row=9, column=5, padx=5, pady=5)
+
         close_button = tk.Button(frame, text='Close Window', command=frame.destroy)
-        close_button.grid(row=10, column=0, columnspan=3)
+        close_button.grid(row=10, column=0, columnspan=5, pady=5)
 
     def name_window(self, newname, frame):
         name = newname.get()

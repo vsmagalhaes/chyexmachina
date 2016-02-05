@@ -1,3 +1,4 @@
-#Source[1] Molecule[2] Transition[3] Frequency[4] Einstein Coef.[5] En. Upper j[6] Lower j[7] Partition Func Q[8] Exc. Temp.[9] sig(Exc. temp.)[9] Opacity/Integ. int.[10] sig(Opacity/Integ. int.)[11] Line width[12] sig(Line width)[13]
-twhya	  CN-14     3-2  340.019626  9.27e-5	4	32.6	2	25.9	10.8	0.8	5.7841222000E+03	5.784e2 0 0	8.6031e+13	5.7448e+11
-twhya	  CN-15     3-2  329.8371328 3.583e-4	7	31.7	2	17.8	10.8	0.8	215.98035841031		21.598 0 0	2.8928e+11	1.9185e+09
+## Created by Chyexmachina:MiniCol Version: Prerelease 0.2 on Fri Feb  5 11:50:02 2016.
+#Source[1] Molecule[2] Transition[3] Frequency (GHz)[4] Einstein Coef.(s^{-1})[5] En. Upper j(K)[6] Lower j[7] Partition Func Q[8] Exc. Temp.(K)[9] sig(Exc. temp.)(K)[10] Opacity/Integ. int.(0|K*km/s)[11] sig(Opacity/Integ. int.)(0|K*km/s)[12] Line width(km/s)[13] sig(Line width)(km/s)[14] Column dens.(cm^{-2})[15] sig(Column dens.(cm^{-2}))[16]
+twhya	  CN-14     3-2  340.019626  9.27e-5	4	32.6	2	25.9	10.8	0.8	5.7841222000E+03	5.784e2 0 0	1.8784e+13	5.7448e+11
+twhya	  CN-15     3-2  329.8371328 3.583e-4	7	31.7	2	17.8	10.8	0.8	215.98035841031		21.598 0 0	6.1487e+10	1.9185e+09

@@ -10,8 +10,11 @@ Helper buttons -> Done!
 
 ##LTE Interface -> Done!
     TEX -> Done!
+    TEX standalone -> Done!
     Column
+    Column standalone -> Done!
     BB
+        Needs Helpers!
 
 ##Next
     Documentation
