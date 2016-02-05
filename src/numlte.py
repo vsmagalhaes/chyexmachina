@@ -147,6 +147,15 @@ def part_statistics_ratio(eup, tt, tex):
 
 
 def calc_tex(tau, etau, tr, etr, freq):
+    """
+    Calculates Excitation temperature from the opacity and the intensity of a line at a given frequency.
+    :param tau: Total Opacity of the Line
+    :param etau: Error in the total opacity
+    :param tr: Intensity of the line [K]
+    :param etr: Uncertainty on the intensity of the line [K]
+    :param freq: Rest frequency of the line.
+    :return: Excitation temperature, Uncertainty in Tex [K],[K]
+    """
     exptau = 1 - math.exp(-tau)
     eexptau = max(abs(1 - math.exp(-(tau + etau)) - exptau), abs(1 - math.exp(-(tau - etau)) - exptau))
     jnubg = jnu(tbg, freq)

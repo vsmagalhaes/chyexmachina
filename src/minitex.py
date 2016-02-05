@@ -2,7 +2,6 @@
 
 import argparse
 
-import auxiliary as aux
 import numlte as nl
 import pyfi as fh
 
@@ -20,11 +19,9 @@ filein.close()
 
 values = fh.float_file(fileaslist, skip=[0, 1, 2])
 fileout = open(args.outfile, 'w')  # real option
-aux.writeInfo(fileout,"MiniCol")
-fileout.write("#Source[1] Molecule[2] Transition[3] Frequency (GHz)[4] Einstein Coef.(s^{-1})[5] En. Upper j(K)[6] Lower j[7]")
-fileout.write(
-    " Partition Func Q[8] Exc. Temp.(K)[9] sig(Exc. temp.)(K)[9] Opacity/Integ. int.(0/K*km/s)[10] sig(Opacity/Integ. int.)(0/K*km/s)[11]")
-fileout.write(" Line width(km/s)[12] sig(Line width)(km/s)[13]\n")
+aux.writeInfo(fileout, "MiniTex")
+fileout.write("#Source[1] Molecule[2] Transition[3] Frequency[4] Opacity[5] sig(Opacity)")
+
 for i in range(len(values)):
     value = values[i]
     line = fileaslist[i]

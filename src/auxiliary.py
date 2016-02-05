@@ -18,24 +18,51 @@ defaultMessage = 'Something went wrong see terminal window for details.'
 
 
 def writeInfo(fileout, subname):
+    """
+    Writes first header line on output files
+    :param fileout: File for the header line to be written
+    :param subname: Subrutine calling the method
+    :return: No return
+    """
     fileout.write(
         "## Created by " + softName + ":" + subname + " Version: " + version + " on " + time.asctime() + ".\n")
 
 
 class Misc():
+    """
+    Class containing miscellaneous tasks regarding window management, error and warning displays,
+    Parameter parsing, helper buttons.
+    """
     def error_window(self, frame, message):
+        """
+        Prompts an error window for the user
+        :param frame: tk input parameter
+        :param message: Message to be displayed in the error window
+        :return: No return
+        """
         frame.wm_title("ERROR!")
         err = tk.Label(frame, fg='red', text="ERROR: " + message)
         err.pack(side='top', padx=5, pady=5)
         qt = self.ok_button(frame)
 
     def warn_window(self, frame, message):
+        """
+        Prompts an warning window for the user
+        :param frame: tk input parameter
+        :param message: Message to be displayed in the warning window
+        :return: No return
+        """
         frame.wm_title("Warning")
         warn = tk.Label(frame, fg='purple', text="Warning: " + message)
         warn.pack(side='top', padx=5, pady=5)
         qt = self.ok_button(frame)
 
     def error_msg(self, message):
+        """
+        Displays an error message on the terminal, more versatile on how to be called than error window.
+        :param message: Message to be displayed
+        :return: no return
+        """
         print '\n'
         self.draw_attention(40)
         print "ERROR: " + message
@@ -43,6 +70,11 @@ class Misc():
         print '\n'
 
     def warn_msg(self, message):
+        """
+        Displays a warning message on the terminal, more versatile on how to be called than warning window.
+        :param message: Message to be displayed
+        :return: no return
+        """
         print '\n'
         self.draw_attention(40)
         print "Warning: " + message
@@ -50,12 +82,25 @@ class Misc():
         print '\n'
 
     def draw_attention(self, times):
+        """
+        Prints a string of #
+        :param times: how many # in the string
+        :return: No return
+        """
         saida = ''
         for i in range(times):
             saida += '#'
         print saida
 
     def helper(self, frame, par, desc, exam):
+        """
+        Configures a help window for a parameter
+        :param frame: Parent tk frame
+        :param par: Name of the parameter for the help
+        :param desc: Description of the parameter
+        :param exam: example of usage of the parameter
+        :return: No return
+        """
         frame.wm_title("Help for: " + par)
         frame.config(bg='yellow')
         helping = tk.Message(frame, width=300, bg='yellow',
@@ -64,9 +109,20 @@ class Misc():
         accept = self.ok_button(frame)
 
     def ok_button(self, frame):
+        """
+        Simple ok button
+        :param frame: parent tk frame
+        :return: the ok button
+        """
         return tk.Button(frame, text='Ok', command=frame.destroy).pack(side='bottom')
 
     def help_button(self, frame, help_com):
+        """
+        a prototypical help_button.
+        :param frame: Parent tk frame for the button
+        :param help_com: command to be executed by the help button
+        :return: Help button
+        """
         return tk.Button(frame, text='Help', command=help_com, fg='orange')
 
     def get_par_from_sv_werr(self, sv):
@@ -203,8 +259,7 @@ class LTE:
                 result_sv.set("ERROR!")
             else:
                 tex, etex = nl.calc_tex(tau, etau, tr, etr, 1e9 * nu)
-                result_sv.set("{0:.2e} +- {1:.2e}".format(tex, etex))
-            print "calculando"
+                result_sv.set("{0:.2f} +- {1:.2f}".format(tex, etex))
 
 
     def manual_input(self, filename):

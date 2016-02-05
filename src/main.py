@@ -181,7 +181,6 @@ class MainWindow(tk.Frame):
         parnames = aux.LTE.tex.parnames
         parsdesc = aux.LTE.tex.pardesc
         parexamp = aux.LTE.tex.parexam
-
         winName = tk.StringVar()
         text = tk.Label(frame, text='Window Name: ')
         text.grid(row=1, column=0, pady=5, padx=5, sticky='w')
@@ -189,7 +188,6 @@ class MainWindow(tk.Frame):
         field.grid(row=1, column=1, pady=5, padx=5)
         givename = tk.Button(frame, text='Give name', command=lambda: self.name_window(winName, frame))
         givename.grid(row=1, column=2, pady=5, padx=5)
-
         for i in range(3):
             par = tk.StringVar()
             text = tk.Label(frame, text=parnames[i])
@@ -197,7 +195,6 @@ class MainWindow(tk.Frame):
             field = tk.Entry(frame, textvariable=par)
             field.grid(row=i + 2, column=1, pady=5, padx=5)
             sv_pars.append(par)
-
         aux.Misc().help_button(frame, lambda: self.call_helper \
             (parnames[0], parsdesc[0], parexamp[0])) \
             .grid(row=2, column=2, padx=5, pady=5)
@@ -210,13 +207,11 @@ class MainWindow(tk.Frame):
         texinst = aux.LTE.tex()
         calc_tex = tk.Button(frame, text='Calculate Tex', command=lambda: texinst.calculate_Tex(result_sv, *sv_pars))
         calc_tex.grid(row=5, column=1, pady=5, padx=5)
-
         result_sv = tk.StringVar()
         text = tk.Label(frame, text='Result: ')
         text.grid(row=6, column=0, pady=5, padx=5, sticky='w')
         field = tk.Entry(frame, textvariable=result_sv)
         field.grid(row=6, column=1, pady=5, padx=5)
-
         close_button = tk.Button(frame, text='Close Window', command=frame.destroy)
         close_button.grid(row=10, column=0, columnspan=2)
 
