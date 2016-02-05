@@ -15,7 +15,7 @@ import numpy as np
 import numlte as nl
 
 softName = "Chyexmachina"
-version = 'Prerelease 0.2'
+version = 'Prerelease 0.3'
 defaultMessage = 'Something went wrong see terminal window for details.'
 
 

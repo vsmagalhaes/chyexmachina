@@ -1,8 +1,7 @@
 # chyexmachina
 
-## Version : 'Prerelease 0.2'
+## Version : 'Prerelease 0.3'
 
-Helper buttons -> Done!
 
 ## Radex Gridding interface works
     needs historic!
