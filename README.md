@@ -6,13 +6,20 @@
 ## Radex Gridding interface works
     needs historic!
 
-
-##LTE Interface -> Done!
-    TEX -> Done!
     TEX standalone -> Done!
-    Column
     Column standalone -> Done!
+
+##LTE Interface to do list:
+    TEX 
+        Beam filling factor for line emitting region
+        continuum source + its filling factor.
+        
+    
+    Column
+        compute N for Tex ranges
+    
     BB
+        compute intensities for Tex ranges
         Needs Helpers!
 
 ##Next

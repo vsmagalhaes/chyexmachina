@@ -1,3 +1,6 @@
+#! /usr/bin/python
+
+
 import Tkinter as tk
 
 import auxiliary as aux
@@ -89,14 +92,6 @@ class MainWindow(tk.Frame):
     def call_bb(self):
         frame = tk.Toplevel(self)
         self.bb_window(frame)
-
-    # def goshow(self, iotext, t):
-    #     ster = iotext.get()
-    #     if ster == "HCN":
-    #         print "Cyanide!"
-    #         t.destroy()
-    #     else:
-    #         iotext.set("Molecule not found, retry")
 
     def radex_grids(self):
         t = tk.Toplevel(self)

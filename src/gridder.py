@@ -8,16 +8,12 @@ import time
 import numlte as nl
 import pyfi as fh
 
-indef = '../resources/gridin.grd'
-outdef = '../resources/gridout.rdx'
-
 parser = argparse.ArgumentParser(description="Crunches a grid from Radex in a more treatable file")
 parser.add_argument("infile", type=str, default=indef, help="Grid input File")
 parser.add_argument("output", type=str, default=outdef, help="Name of the Radex output file")
 args = parser.parse_args()
 
 filein = open(args.infile, 'r')
-# filein = open(indef,'r')
 fileAsList = fh.strip_off_comm(filein)
 filein.close()
 
@@ -78,4 +74,3 @@ dure = stop - start
 print "Run time = ", dure, "seconds"
 os.system('mv radex.log /tmp/')
 os.system('grep -v \'!\' /tmp/radex.out > ' + args.output)
-# os.system('grep -v \'!\' radex.out > '+outdef)

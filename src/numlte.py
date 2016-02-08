@@ -167,6 +167,5 @@ def calc_tex(tau, etau, tr, etr, freq):
     etex = max(abs(ijnu(jnutex + ejnutex, freq) - tex), abs(ijnu(jnutex - ejnutex, freq) - tex))
     return tex, etex
 
-
-def part_interp():
-    return 0
+# def part_interp():
+#   return 0
