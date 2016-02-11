@@ -5,13 +5,15 @@ import argparse
 import os
 import time
 
+import auxiliary as aux
 import numlte as nl
 import pyfi as fh
 
 parser = argparse.ArgumentParser(description="Crunches a grid from Radex in a more treatable file")
-parser.add_argument("infile", type=str, default=indef, help="Grid input File")
-parser.add_argument("output", type=str, default=outdef, help="Name of the Radex output file")
+parser.add_argument("infile", type=str, help="Grid input File")
+parser.add_argument("output", type=str, help="Name of the Radex output file")
 args = parser.parse_args()
+
 
 filein = open(args.infile, 'r')
 fileAsList = fh.strip_off_comm(filein)
@@ -67,10 +69,19 @@ for temp in temps:
             else:
                 infile.write('1\n')
 
-os.system('radex < /tmp/radex.inp > /dev/null')
+os.system(aux.radex + ' < /tmp/radex.inp > /dev/null')
 
 stop = time.time()
 dure = stop - start
 print "Run time = ", dure, "seconds"
 os.system('mv radex.log /tmp/')
-os.system('grep -v \'!\' /tmp/radex.out > ' + args.output)
+output = open(args.output, 'w')
+aux.writeInfo(output, "Gridder")
+output.write(
+    "#   Tkin     Density       Cdens     Eup        Freq       Wavel        Tex        Tau         TR        Pop        Pop       flux       flux     Jup  Jlow\n")
+output.write(
+    "#      K        cm-3        cm-2       K         GHz        micr          K          -          K         Up        Low     K km/s  erg/cm2/s\n")
+output.write(
+    "#Col   1           2           3       4           5           6          7          8          9         10         11         12         13      14    15\n")
+output.close()
+os.system('grep -v \'!\' /tmp/radex.out >> ' + args.output)

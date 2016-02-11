@@ -5,7 +5,7 @@
 
 ## Radex Gridding interface works
     needs historic!
-
+    output grid needs a header -> Done!
     TEX standalone -> Done!
     Column standalone -> Done!
 
@@ -21,9 +21,12 @@
     BB
         compute intensities for Tex ranges
         Needs Helpers!
+        
+## Grid analysis:
+    New class: Line
+    grid analisys functions such as plotting line ratios will be here. 
 
 ##Next
     Documentation
-    Grid analysis
     Chi^2 of grid
 
