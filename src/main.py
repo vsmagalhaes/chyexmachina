@@ -137,6 +137,11 @@ class MainWindow(tk.Frame):
             cancelbutton = tk.Button(t, fg='red', text='Cancel', command=lambda: self.cancel_gridder(t))
             cancelbutton.grid(row=10, column=0, pady=10)
 
+    def grid_analysis(self):
+        frame = tk.Toplevel(self)
+
+
+
     def summon_gridder(self, frame, *gridpars):
         newGrid = aux.Gridder(*gridpars)
         if not self.status_check(newGrid.write_grid_file()):
@@ -211,8 +216,42 @@ class MainWindow(tk.Frame):
         close_button.grid(row=10, column=0, columnspan=2)
 
     def col_window(self, frame):
+        frame.geometry('600x600')
+        winName = tk.StringVar()
+        text = tk.Label(frame, text='Window Name: ')
+        text.grid(row=1, column=0, pady=5, padx=5, sticky='w')
+        field = tk.Entry(frame, textvariable=winName)
+        field.grid(row=1, column=1, pady=5, padx=5)
+        givename = tk.Button(frame, text='Give name', command=lambda: self.name_window(winName, frame))
+        givename.grid(row=1, column=2, pady=5, padx=5)
+        options = ["Manual Input", "LAMDA File  "]
+        modo = tk.StringVar()
+        modo.set(options[0])
+        mode_select = tk.OptionMenu(frame, modo, *options)
+        mode_select.grid(row=2, padx=5, pady=5, column=0)
+        go_mode = tk.Button(frame, text='Go!', command=lambda: self.call_column(modo, frame))
+        go_mode.grid(row=2, padx=5, pady=5, column=1)
         close_button = tk.Button(frame, text='Close Window', command=frame.destroy)
-        close_button.grid(row=10, column=0, columnspan=3)
+        close_button.grid(row=30, column=0, columnspan=3)
+
+    def call_column(self, modo, frame):
+        modostr = modo.get()
+        column_obj = aux.LTE.col()
+        if modostr == "Manual Input":
+            tk.Label(frame, text='Manual entry mode').grid(row=3)
+            col_pars = []
+            for i in range(len(column_obj.parnames)):
+                par = tk.StringVar()
+                col_pars.append(par)
+                texto = tk.Label(frame, text=column_obj.parnames[i])
+                texto.grid(row=4 + i, column=0, sticky='w', padx=5, pady=5)
+                entrada = tk.Entry(frame, textvariable=par)
+                entrada.grid(row=4 + i, column=1, sticky='w', padx=5, pady=5)
+                help = aux.Misc().help_button(frame, lambda: self.call_helper(column_obj.parnames[i], "", ""))
+                help.grid(row=4 + i, column=2, sticky='w', padx=5, pady=5)
+        else:
+            Misc().error_msg("Mode Not implemented yet.")
+
 
     def bb_window(self, frame):
         bb_ins = aux.LTE.bb()

@@ -263,6 +263,30 @@ class LTE:
                 tex, etex = nl.calc_tex(tau, etau, tr, etr, 1e9 * nu)
                 result_sv.set("{0:.2f} +- {1:.2f}".format(tex, etex))
 
+    class col:
+        parnames = ["Frequency [GHz]",
+                    "Einsteins Coefficient [s^{-1}]",
+                    "Upper level Degeneracy",
+                    "Upper level Energy [K]",
+                    "Lower level Quantum number",
+                    "Partition Function at given Tex []",
+                    "Excitation Temperature [K]",
+                    "Excitation Temperature error [k]",
+                    "Opacity/Integrated Intensity [n/a]/[K*km/s]",
+                    "Opacity/Integrated Intensity error [n/a]/[K*km/s]",
+                    "Line width [km*s^{-1}]",
+                    "Line width error [km*s^{-1}]]"]
+        pardesc = ['Total opacity of the line',
+                   'Main beam scale line intensity in Kelvins',
+                   'Rest frequency of the line']
+        parexam = ['4.7 ## No uncertainty\n\t4.7 1.0 ## Uncertainty of 1.0',
+                   '2.5 ## No uncertainty\n\t2.5 0.1 ## Uncertainty of 0.1',
+                   '340 ## No uncertainty']
+
+        def save_mol_pars(self):
+            return 1
+
+
     class bb:
         bnuNames = ["Temperature [K]", "Frequency [GHz]", "Flux [Jy]"]
         jnuNames = ["Temperature [K]", "Frequency [GHz]", "Intensity [K]"]
